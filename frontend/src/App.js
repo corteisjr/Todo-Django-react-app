@@ -1,5 +1,6 @@
 import { Component } from "react";
 import "./App.css";
+import Modal from "./components/Modal";
 
 const tasks = [
   {
@@ -20,16 +21,46 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      modal: false,
       viewCompleted: false,
       taskList: tasks,
+      activeItem: {
+        title: "",
+        description: "",
+        completed: false,
+      },
     };
   }
 
+  toggle = () => {
+    this.setState({ modal: !this.state.modal });
+  };
+
+  handleSubmit = (item) => {
+    alert("Saved!" + JSON.stringify(item));
+  };
+
+  handleDelete = (item) => {
+    alert("Deleted!" + JSON.stringify(item));
+  };
+
+  createItem = () => {
+    const item = { title: "", modal: !this.state.modal };
+    this.setState({ activeItem: item, modal: !this.state.modal });
+  };
+
+  editItem = (item) => {
+    this.setState({
+      activeItem: item,
+      model: !this.state.modal,
+    });
+  };
+
   displacyCompleted = (status) => {
     if (status) {
-      return this.setStatus({ viewCompleted: true });
+      return this.setState({ viewCompleted: true });
     }
-    return this.setStatus({ viewCompleted: false });
+    return this.setState({ viewCompleted: false });
   };
 
   renderTabList = () => {
@@ -79,7 +110,7 @@ class App extends Component {
 
   render() {
     return (
-      <main className="content">
+      <main className="content p-3 mb-2 bg-info">
         <h1 className="text-black text-uppercase text-center my-4">
           Task Manager
         </h1>
@@ -96,6 +127,16 @@ class App extends Component {
             </div>
           </div>
         </div>
+        <footer className="my-3 mb-2 bg-info text-white text-center">
+          Copyright 2023 &copy; All rights Reversed
+        </footer>
+        {this.state.modal ? (
+          <Modal
+            activeItem={this.state.activeItem}
+            toggle={this.toggle}
+            onSave={this.handleSubmit}
+          ></Modal>
+        ) : null}
       </main>
     );
   }
