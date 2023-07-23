@@ -25,8 +25,8 @@ class CustomModal extends Component {
     if (e.target.type === "checkbox") {
       value = e.target.checked;
     }
-    const activItem = { ...this.state.activeItemm, [name]: value };
-    this.setState({ activItem });
+    const activeItem = { ...this.state.activeItem, [name]: value };
+    this.setState({ activeItem });
   };
 
   render() {
@@ -35,7 +35,7 @@ class CustomModal extends Component {
       <Modal isOpen={true} toggle={toggle}>
         <ModalHeader toggle={toggle}>Task Item</ModalHeader>
         <ModalBody>
-          <form>
+          <Form>
             {/* 3 formgroups
             1 title label */}
             <FormGroup>
@@ -73,12 +73,12 @@ class CustomModal extends Component {
                 Completed
               </Label>
             </FormGroup>
-          </form>
+          </Form>
         </ModalBody>
         <ModalFooter>
-          <button color="success" onClick={() => onSave(this.state.activeItem)}>
+          <Button color="success" onClick={() => onSave(this.state.activeItem)}>
             Save
-          </button>
+          </Button>
         </ModalFooter>
       </Modal>
     );
